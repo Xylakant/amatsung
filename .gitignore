@@ -2,3 +2,5 @@
 .bundle
 Gemfile.lock
 pkg/*
+bin/fog
+bin/nokogiri
