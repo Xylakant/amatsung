@@ -1,0 +1,14 @@
+## Usage
+
+### Add nodes to a testing-setup
+
+````
+amatsung node add
+````
+
+### List servers in the given setup
+
+````
+amazung node list
+````
+

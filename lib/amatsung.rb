@@ -1,5 +1,11 @@
 require "amatsung/version"
+require "amatsung/config"
+require "amatsung/node/node"
+require "amatsung/testrun"
 
 module Amatsung
-  # Your code goes here...
+
+  SUPPORTED_PROVIDERS = %w<AWS>
+
+  class InvalidConfig < ArgumentError; end
 end

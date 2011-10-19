@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="info">
+
+	<clients> 
+		<client host="localhost" use_controller_vm="true"/>
+	</clients>
+	<servers>
+		<server host="192.168.1.1" port="80" type="tcp"></server>
+	</servers>
+
+	<monitoring>
+		<monitor host="geronimo" type="munin"/> <monitor host="f14-2" type="erlang"></monitor>
+	</monitoring>
+
+	<load>
+		<arrivalphase phase="1" duration="10" unit="minute">
+			<users interarrival="2" unit="second"></users>
+		</arrivalphase>
+		<arrivalphase phase="2" duration="10" unit="minute">
+			<users interarrival="1" unit="second"></users>
+		</arrivalphase>
+		<arrivalphase phase="3" duration="10" unit="minute">
+			<users interarrival="0.1" unit="second"></users>
+		</arrivalphase>
+	</load>
+
+	<sessions>
+		<session name="http-example" probability="70" type="ts_http">
+			<thinktime min="2" max="10" random="true"></thinktime>
+			<request>
+				<http url="/" method="GET" version="1.1" url="/images/logo.gif"></http> 
+			</request> 
+			<thinktime value=’%%_rndthink%%’ random=’true’></thinktime>
+			<request> 
+				<http method="GET" version="1.1" if_modified_since="Fri, 14 Nov 2003 02:43:31 GMT"></http>
+			</request>
+			<thinktime value="20" random="true"></thinktime>
+			<transaction name="index_request">
+				<request><http url="/index.en.html" method="GET" version="1.1" ></http></request>
+				<request><http url="/images/header.gif" method="GET" version="1.1"></http></request>
+			</transaction>
+			<thinktime value="60" random="true"></thinktime>
+			<request>
+				<http url="/" method="POST" version="1.1" contents="bla=blu"></http>
+			</request>
+			<request>
+				<http url="/bla" method="POST" version="1.1" contents="bla=blu&amp;name=glop">
+					<www_authenticate userid="Aladdin" passwd="open sesame"/>
+				</http>
+			</request>
+		</session>
+ 	</sessions>
+</tsung>
+

@@ -1,0 +1,50 @@
+:szenario: './config/testzsenario.xml'
+
+:ssh:
+    :username: 'ubuntu'
+    :private_key_path: 'your private key path here'
+    :public_key_path: 'your public key path there'
+
+:compute:
+    :provider: 'AWS'
+    :aws_secret_access_key: 'your key here'
+    :aws_access_key_id: 'your region here'
+    :region: 'eu-west-1'
+
+:nodes:
+    :group: 'Tsung'
+    :master:
+        :name: 'zom'
+        :ami: 'ami-232243'
+        :flavor_id: 't1.micro'
+        :groups:
+            -
+                'Tsung'
+            -
+                'default'
+        :provisioned: false
+        :weight: 1
+        :maxusers: 500
+    :slaves:
+        -
+            :name: 'krontep'
+            :ami: 'ami-232243'
+            :flavor_id: 'm1.lage'
+            :cpus: 2
+            :groups:
+                -
+                    'Tsung'
+            :provisioned: false
+            :weight: 2
+            :maxusers: 800
+        -
+            :name: 'althrace'
+            :ami: 'ami-232243'
+            :flavor_id: 'm1.large'
+            :cpus: 2
+            :groups:
+                -
+                    'Tsung'
+            :provisioned: false
+            :weight: 2
+            :maxusers: 800      

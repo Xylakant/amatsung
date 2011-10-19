@@ -1,2 +1,32 @@
-#! /bin/env ruby
+#!/usr/bin/env ruby
 
+require 'trollop'
+require_relative '../lib/amatsung'
+
+filename = File.basename(__FILE__)
+
+p = Trollop::Parser.new do
+  banner <<-EOS
+  amatzung - an tsung management for cloud instances
+
+Usage:
+      #{filename} <node|szenario> [options]
+where [options] are:
+EOS
+
+  opt :config, "Config file to use", :type => String, :default => "~/.amatsungrc"
+end
+
+cmd = ARGV.shift
+
+SUB_COMMANDS = %w(run)
+
+opts = Trollop::with_standard_exception_handling p do
+  o = p.parse ARGV
+  
+  if !SUB_COMMANDS.include?(cmd) && o[:daemonize]
+    raise Trollop::HelpNeeded if ARGV.empty? # show help screen
+  end
+
+  o
+end
