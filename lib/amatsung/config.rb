@@ -63,7 +63,7 @@ module Amatsung
         c = doc.create_element('clients') do |xml_node|
 
           nodes.each do |node|
-            host = (node.region == default_region) ? node.private_hostname : node.public_dns_name
+            host = (node.region == default_region) ? node.private_dns_name : node.public_dns_name
             s = doc.create_element('client', :host => host, :cpu => node.cpus)
             xml_node.add_child(s)
           end
@@ -106,7 +106,7 @@ module Amatsung
       config = ''
 
       nodes.each do |node|
-        host = (node.region == default_region) ? node.private_hostname : node.public_dns_name
+        host = (node.region == default_region) ? node.private_dns_name : node.public_dns_name
 
         config << "
 Host #{host}
