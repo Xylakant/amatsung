@@ -65,6 +65,10 @@ module Amatsung
       /^([-\w]+)/.match(@vm.private_dns_name)[1]
     end
 
+    def public_hostname
+      /^([-\w]+)/.match(@vm.dns_name)[1]
+    end
+
     def private_dns_name
       @vm.private_dns_name
     end
