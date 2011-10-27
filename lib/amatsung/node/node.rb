@@ -3,11 +3,13 @@ module Amatsung
   class Node
 
     attr_accessor  :provider, :node_config, :vm, :provisioned, :cpus
+    attr_reader :region
 
     def initialize(provider, node_config)
       @provider = provider
       @node_config = node_config
       @cpus = (node_config.delete(:cpus) || 1)
+      @region = node_config.delete(:region)
       @provisioned = false
     end
 
@@ -59,8 +61,20 @@ module Amatsung
       @vm.destroy
     end
 
-    def hostname
+    def private_hostname
       /^([-\w]+)/.match(@vm.private_dns_name)[1]
+    end
+
+    def private_dns_name
+      @vm.private_dns_name
+    end
+    
+    def public_dns_name
+      @vm.dns_name
+    end
+
+    def public_ip_address
+      @vm.public_ip_address
     end
 
     def self.list
